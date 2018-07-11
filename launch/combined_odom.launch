@@ -1,0 +1,8 @@
+<!-- Starts up everything needed to run the example listener/talker Python nodes. -->
+
+<launch>
+  <node pkg="combined_odom" type="combined_odom.py" name="combined_odom">
+    <param name="rate" value="10"/>
+  </node>
+
+</launch>
