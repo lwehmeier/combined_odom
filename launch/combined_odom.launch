@@ -2,7 +2,7 @@
 
 <launch>
   <node pkg="combined_odom" type="combined_odom.py" name="combined_odom">
-    <param name="rate" value="10"/>
+    <param name="rate" value="20"/>
   </node>
 
 </launch>
