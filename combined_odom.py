@@ -22,7 +22,7 @@ abs_m = Point()
 def callbackG(data):
     global rel_g
     global abs_g
-    abs_g = data.pose.orientation
+    abs_g = data.pose.pose.orientation
     #abs_g = data.pose.pose.orientation
     #rel_g = data.twist.twist.angular
 def callbackM(data):
@@ -54,8 +54,8 @@ def my_callback(event):
 def broadcastTF(event):
     if tf_orient is None:
         odom_broadcaster.sendTransform(
-                (0,0,0),
-                (0,0,0,1),
+                (abs_m.x, abs_m.y, 0),
+                (abs_g.x,abs_g.y,abs_g.z, abs_g.w),
                 rospy.Time.now(),
                 "base_footprint",
                 "odom"
@@ -69,7 +69,7 @@ odom_broadcaster=tf.TransformBroadcaster()
 rospy.Timer(rospy.Duration(0.1), my_callback)
 rospy.Timer(rospy.Duration(1.0/10),broadcastTF)
 odom_pub = rospy.Publisher("/odom", Odometry, queue_size=3)
-rospy.Subscriber("/slam_out_pose", PoseStamped, callbackG)
-rospy.Subscriber("/mouse/odom", Odometry, callbackM)
+rospy.Subscriber("/gyro/odom", Odometry, callbackG)
+rospy.Subscriber("/estimator/odom", Odometry, callbackM)
 r = rospy.Rate(10)
 rospy.spin()
