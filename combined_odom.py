@@ -66,9 +66,9 @@ def broadcastTF(event):
 rospy.init_node('odom')
 global odom_broadcaster
 odom_broadcaster=tf.TransformBroadcaster()
+odom_pub = rospy.Publisher("/odom", Odometry, queue_size=3)
 rospy.Timer(rospy.Duration(0.1), my_callback)
 rospy.Timer(rospy.Duration(1.0/10),broadcastTF)
-odom_pub = rospy.Publisher("/odom", Odometry, queue_size=3)
 rospy.Subscriber("/gyro/odom", Odometry, callbackG)
 rospy.Subscriber("/estimator/odom", Odometry, callbackM)
 r = rospy.Rate(10)
